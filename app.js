@@ -11,14 +11,16 @@ var five = require("johnny-five");
 //instanciando uma placa que deve estar conectada ao servidor
 var board = new five.Board();
 
-
 //importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
 var database= require("./modules/dataBaseConnect.js");
+//database.erro("testando a função criada no módulo");
 
-database.erro("testando a função criada no módulo");
+database.ConectarBancoDeDados();
 
 
 
+
+//criando a rota do servidor
 app.use("/", express.static(path.join(__dirname, '/files/pages')));
 
 app.get('/', function (req, res) {
@@ -36,22 +38,7 @@ io.on('connection', function(socket ){
 
 
 
-//instanciando o módulo reponsável pela comunicação com o mongodb
-var Mongoose = require('Mongoose');
 
-var db = Mongoose.connection;
-db.on('error', function()
-{
-	console.log('erro ao conectar na base de dados');
-
-});;
-
-db.once('open', function() {
-  console.log('Conectado ao MongoDB.')
-  // Vamos adicionar nossos Esquemas, Modelos e consultas aqui
-});
-
-Mongoose.connect('mongodb://localhost/test');
 
 
 
