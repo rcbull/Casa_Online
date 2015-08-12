@@ -25,6 +25,10 @@ app.get('/',function(req,res){
 
 });
 
+
+//
+
+
 app.get('/node',function(req,res){
 
 	res.render('index',{nome:'Fernando',linguagem:'node.js'});
