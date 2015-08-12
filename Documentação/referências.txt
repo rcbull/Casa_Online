@@ -1,2 +1,10 @@
 -node e mongo
 		http://nodebr.com/nodejs-e-mongodb-introducao-ao-mongoose/
+
+
+
+--Git ignore diretório
+
+vim .git/info/exclude
+
+insert + nome diretorio + esc + w! + enter
