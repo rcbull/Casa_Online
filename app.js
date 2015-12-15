@@ -4,43 +4,33 @@ var express = require('express'),
 
 
 //importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
-var database= require("./modules/dataBaseConnect.js");
+//var database= require("./modules/dataBaseConnect.js");
 //database.erro("testando a função criada no módulo");
 
-database.ConectarBancoDeDados();
+//database.ConectarBancoDeDados();
 
 
 
 
 
-app.engine('html',cons.swig);
-app.set('view engine','html');
-app.set('views',	__dirname +	"/files/pages");
-
-
-app.get('/',function(req,res){
-
-	res.render('index',{nome:'Fernando',linguagem:'java'});
-
-
-});
-
-
-
-
-
-app.get('/node',function(req,res){
-
-	res.render('index',{nome:'Fernando',linguagem:'node.js'});
-
+// app config
+app.configure(function() {
+  // Views directory
+  app.set('views', __dirname + '/files/pages');
+  // Static files directory
+  app.use(express.static(__dirname + '/public'));
+  // Disable layout
+  app.set("view options", {layout: true});
+  // Views engine
+  app.set('view engine', 'jade');
 
 });
 
 
-app.get('*',function(req,res){
 
-	res.send("Page not found",404);
-
+// Render the main page
+app.get('/', function(req, res) {
+  res.render('index.jade' );
 });
 
 app.listen(8080);
