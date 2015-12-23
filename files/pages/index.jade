@@ -1,1 +1,28 @@
 extends _layout.jade
+
+block content
+
+	div.container
+		div.row
+			h1.red-text.center  Bem vindo
+			h5.purple-text.center Esse é nosso lar online
+		div.row
+			div.red.col.s6.m6.l6.center
+					p.white-text.large Sala
+					a(href='#' id='sala' pin='10' class='btnAction')
+						i#salaIcone.material-icons.large.white-text power_settings_new
+
+			div.blue.col.s6.m6.l6.center
+				p.white-text.large Escritório
+				a(href='#' id='escritorio' pin='11' class='btnAction')
+					i#escritorioIcone.material-icons.large.white-text not_interested
+		div.row
+			div.brown.col.s6.m6.l6.center
+					p.white-text.large Lavanderia
+					a(href='#' id='lavanderia' pin='12' class='btnAction')
+						i#lavanderiaIcone.material-icons.large.white-text not_interested
+
+			div.green.col.s6.m6.l6.center
+				p.white-text.large Churrasqueira
+				a(href='#' id='churrasqueira' pin='13' class='btnAction')
+					i#churrasqueiraIcone.material-icons.large.white-text power_settings_new
