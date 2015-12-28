@@ -1,7 +1,25 @@
 $(document).ready(function()
 {
  	bindAllBtnEvent();
+
+	var socket = io.connect();
+ 	
+
+	socket.on('mensagem', function (data) {
+
 	
+	   $('#tituloBemVindo').text(data);
+
+
+	   
+	   if(data.indexOf('Confie') <= -1)
+	   {
+	   		var icone = $('#'+data);
+
+	   		console.log(icone.html());
+	   		addIconChange(icone);
+		}
+  	});		
 });
 
 function addIconChange(object)
@@ -33,6 +51,14 @@ function addBtnClick(btn)
 	{
 		e.preventDefault();
 		addIconChange(icon);
+
+		var msg = $($(this).children()).attr('id');
+
+		var socket = io.connect();
+		socket.emit("resposta",msg)
+
+		
+	
 	});
 
 

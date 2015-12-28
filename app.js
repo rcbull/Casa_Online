@@ -2,6 +2,11 @@ var express = require('express'),
 	app  = express(),
 	cons = require('consolidate');
 
+  var http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server);
+
+
 
 //importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
 //var database= require("./modules/dataBaseConnect.js");
@@ -33,10 +38,25 @@ app.get('/', function(req, res) {
   res.render('index.jade' );
 });
 
-app.listen(8080);
-console.log("Express server running on port 8080");
 
 
+
+io.sockets.on('connection', function (socket) {
+  
+  socket.emit('mensagem', 'Confie em Deus!');
+
+  socket.on('resposta', function (data) {
+    
+
+    socket.broadcast.emit("mensagem", data );
+
+  });
+});
+
+// Start the server at port 3000
+server.listen(9000, function() {
+  console.log('Listening on port %d', server.address().port);
+});
 
 
 
