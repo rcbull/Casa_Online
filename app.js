@@ -6,6 +6,8 @@ var express = require('express'),
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
+  var statusPin = Array();
+
 
 
 //importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
@@ -41,16 +43,32 @@ app.get('/', function(req, res) {
 
 
 
-io.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function (socket) 
+{
   
-  socket.emit('mensagem', 'Confie em Deus!');
+  
+    socket.on('atualizarStatus',function(data)
+    {
+     
 
-  socket.on('resposta', function (data) {
+        var pinIndex = data.pin.name;
+        var pinStatus = data.pin.status; 
+
+        statusPin[pinIndex] = pinStatus ;
+
+
+        socket.broadcast.emit("atualizaStatusPinos", data );
+      
+
+
+    });
+
+
+    socket.on('resposta', function (data) {
     
+     
 
-    socket.broadcast.emit("mensagem", data );
-
-  });
+    });
 });
 
 // Start the server at port 3000
