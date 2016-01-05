@@ -78,11 +78,11 @@ function addBtnClick(btn)
 
 
 		var socket = io.connect();
-		
+		var socketPinEmit = "pin"+pinName;
 		
 		//emitindo mensagem para o servidor informando que o estado do pino foi alterado
 		socket.emit("atualizarStatus",{pin : pin});
-
+	
 		
 	
 	});

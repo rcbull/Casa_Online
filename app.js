@@ -6,7 +6,15 @@ var express = require('express'),
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-  var statusPin = Array();
+
+var five = require("johnny-five");
+var board = new five.Board();
+
+var statusPin = Array();
+var led13;
+var led12;
+var led11;
+var led10;
 
 
 
@@ -15,6 +23,7 @@ var express = require('express'),
 //database.erro("testando a função criada no módulo");
 
 //database.ConectarBancoDeDados();
+
 
 
 
@@ -43,6 +52,16 @@ app.get('/', function(req, res) {
 
 
 
+board.on("ready", function() 
+{
+          led13 = new five.Led(13);
+          led12 = new five.Led(12);
+          led11 = new five.Led(11);
+          led10 = new five.Led(10);
+});
+
+
+
 io.sockets.on('connection', function (socket) 
 {
   
@@ -57,19 +76,33 @@ io.sockets.on('connection', function (socket)
         statusPin[pinIndex] = pinStatus ;
 
 
+      
         socket.broadcast.emit("atualizaStatusPinos", data );
       
+        switch(pinIndex)
+        {
+          case '13':
+            led13.on();
+            break;
+          default:
+            led13.off();
+            break;
+        }
 
 
     });
 
 
     socket.on('resposta', function (data) {
-    
+
      
 
     });
+
+    
 });
+
+  
 
 // Start the server at port 3000
 server.listen(9000, function() {
