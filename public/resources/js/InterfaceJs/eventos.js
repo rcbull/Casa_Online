@@ -6,7 +6,6 @@ $(document).ready(function()
  	
 
 	socket.on('atualizaStatusPinos', function (data) {
-
 	
 
 	   		var iconeName = '#pino'+data.pin.name;
@@ -60,7 +59,7 @@ function addBtnClick(btn)
 	button.bind('click',function(e)
 	{
 		e.preventDefault();
-		addIconChange(icon);
+		
 	
 		var objClicked = $(this);
 
@@ -79,6 +78,8 @@ function addBtnClick(btn)
 
 		var socket = io.connect();
 		var socketPinEmit = "pin"+pinName;
+
+		addIconChange(icon);
 		
 		//emitindo mensagem para o servidor informando que o estado do pino foi alterado
 		socket.emit("atualizarStatus",{pin : pin});

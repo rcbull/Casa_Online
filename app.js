@@ -10,22 +10,8 @@ var express = require('express'),
 var five = require("johnny-five");
 var board = new five.Board();
 
-var statusPin = Array();
-var led13;
-var led12;
-var led11;
-var led10;
-
-
-
-//importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
-//var database= require("./modules/dataBaseConnect.js");
-//database.erro("testando a função criada no módulo");
-
-//database.ConectarBancoDeDados();
-
-
-
+//this variable contain a lot of variables using ins project
+var variables = require('./public/resources/js/class/variables.js');
 
 
 
@@ -54,10 +40,17 @@ app.get('/', function(req, res) {
 
 board.on("ready", function() 
 {
-          led13 = new five.Led(13);
-          led12 = new five.Led(12);
-          led11 = new five.Led(11);
-          led10 = new five.Led(10);
+          variables.led13 = new five.Led(13);
+          variables.led12 = new five.Led(12);
+          variables.led11 = new five.Led(11);
+          variables.led10 = new five.Led(10);
+
+          variables.setLed('13',variables.led13);
+          variables.setLed('12',variables.led12);
+          variables.setLed('11',variables.led11);
+          variables.setLed('10',variables.led10);
+
+
 });
 
 
@@ -71,23 +64,11 @@ io.sockets.on('connection', function (socket)
      
 
         var pinIndex = data.pin.name;
-        var pinStatus = data.pin.status; 
-
-        statusPin[pinIndex] = pinStatus ;
-
+        var pinStatus = data.pin.status;     
 
       
+        variables.onAndOff(pinIndex,pinStatus);
         socket.broadcast.emit("atualizaStatusPinos", data );
-      
-        switch(pinIndex)
-        {
-          case '13':
-            led13.on();
-            break;
-          default:
-            led13.off();
-            break;
-        }
 
 
     });
@@ -111,52 +92,6 @@ server.listen(9000, function() {
 
 
 
-
-
-/* backup
-
-var express = require('express');
-var app  = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
-
-
-//importando o módulo responsável por efetuar a comunicação do node com o arduino
-var five = require("johnny-five");
-
-//instanciando uma placa que deve estar conectada ao servidor
-var board = new five.Board();
-
-//importando o módulo que será responsável pela conexão com a base e pelos modelos de dados
-var database= require("./modules/dataBaseConnect.js");
-//database.erro("testando a função criada no módulo");
-
-database.ConectarBancoDeDados();
-
-
-
-
-//criando a rota do servidor
-app.use("/", express.static(path.join(__dirname, '/files/pages')));
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/files/pages/index.html');
-});
-
-
-io.on('connection', function(socket ){
-
-
-
-
-});
-
-
-
-
-
-*/
 
 
 
